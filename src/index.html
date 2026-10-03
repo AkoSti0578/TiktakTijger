@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; media-src 'self' data:">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiktak Tijger</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Bewegende achtergrond -->
+  <div class="sky" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="cloud c4"></div>
+    <div class="leaves"></div>
+  </div>
+
+  <!-- 1. Welkom / naam invullen -->
+  <section id="screen-welcome" class="screen">
+    <div class="welcome-wrap">
+      <h1 class="logo" aria-label="Tiktak Tijger"></h1>
+      <div class="welcome-tiger" id="welcome-tiger"></div>
+
+      <div class="card welcome-card" id="new-player">
+        <div class="bubble bubble-up" id="welcome-bubble">Hoi! Ik ben Tiktak Tijger. Hoe heet jij?</div>
+        <form id="name-form" autocomplete="off">
+          <input id="name-input" type="text" maxlength="20" placeholder="Typ hier je naam" aria-label="Je naam" spellcheck="false">
+          <button type="submit" class="btn btn-big btn-go">Start! 🐯</button>
+        </form>
+        <button class="btn btn-small btn-ghost hidden" id="back-to-players">← Terug</button>
+      </div>
+
+      <div class="card welcome-card hidden" id="pick-player">
+        <div class="bubble bubble-up">Welkom terug! Wie gaat er typen?</div>
+        <div class="player-list" id="player-list"></div>
+        <button class="btn btn-small btn-ghost" id="add-player">+ Nieuwe speler</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Avonturenkaart -->
+  <section id="screen-map" class="screen hidden">
+    <header class="topbar">
+      <div class="player-badge" id="player-badge"></div>
+      <div class="rank-badge" id="rank-badge"></div>
+      <div class="star-count" id="star-count"></div>
+      <button class="btn btn-icon" id="btn-balloons" title="Ballonnen knallen">🎈</button>
+      <button class="btn btn-icon" id="btn-settings" title="Instellingen">⚙️</button>
+    </header>
+    <div class="map-scroll" id="map-scroll">
+      <div class="map" id="map"></div>
+    </div>
+  </section>
+
+  <!-- 3. Typen! -->
+  <section id="screen-play" class="screen hidden">
+    <header class="topbar play-topbar">
+      <button class="btn btn-icon" id="btn-pause" title="Pauze (Esc)">⏸️</button>
+      <div class="play-title" id="play-title"></div>
+      <div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="speed-meter" id="speed-meter">
+        <div class="speed-label">Tijger-snelheid</div>
+        <div class="speed-bar"><div class="speed-fill" id="speed-fill"></div></div>
+        <div class="speed-word" id="speed-word">klaar?</div>
+      </div>
+    </header>
+
+    <div class="track" id="track">
+      <div class="layer layer-hills"></div>
+      <div class="layer layer-trees"></div>
+      <div class="layer layer-ground"></div>
+      <div class="finish" id="finish">🏁</div>
+      <div class="runner-wrap" id="runner-wrap">
+        <div class="speech" id="speech"></div>
+        <div class="runner" id="runner"></div>
+        <div class="dust" id="dust"></div>
+      </div>
+      <div class="combo" id="combo"></div>
+    </div>
+
+    <div class="type-area">
+      <div class="next-letter" id="next-letter">
+        <div class="next-char" id="next-char"></div>
+        <div class="next-hint" id="next-hint"></div>
+      </div>
+      <div class="text-box" id="text-box"><div class="text" id="text"></div></div>
+    </div>
+    <div class="caps-warning hidden" id="caps-warning">⚠️ Caps Lock staat aan! Druk op Caps Lock om hem uit te zetten.</div>
+
+    <div class="kb-area">
+      <div id="keyboard"></div>
+      <div id="hands"></div>
+    </div>
+
+    <div class="countdown hidden" id="countdown"></div>
+  </section>
+
+  <!-- 4. Uitslag -->
+  <section id="screen-result" class="screen hidden">
+    <div class="card result-card">
+      <h2 id="result-title">Goed gedaan!</h2>
+      <div class="result-stars" id="result-stars"></div>
+      <div class="result-tiger" id="result-tiger"></div>
+      <div class="result-stats">
+        <div class="stat"><div class="stat-num" id="stat-cpm">0</div><div class="stat-label">tekens per minuut</div></div>
+        <div class="stat"><div class="stat-num" id="stat-acc">0%</div><div class="stat-label">goed getypt</div></div>
+        <div class="stat"><div class="stat-num" id="stat-time">0</div><div class="stat-label">seconden</div></div>
+      </div>
+      <div class="rank-up hidden" id="rank-up"></div>
+      <div class="result-buttons">
+        <button class="btn btn-big btn-alt" id="btn-again">🔁 Nog een keer</button>
+        <button class="btn btn-big btn-go" id="btn-next">Volgende level ➜</button>
+        <button class="btn btn-big btn-ghost" id="btn-map">🗺️ Kaart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Ballonnen knallen -->
+  <section id="screen-balloons" class="screen hidden">
+    <header class="topbar">
+      <button class="btn btn-icon" id="btn-balloons-back" title="Terug">⬅️</button>
+      <div class="play-title">🎈 Ballonnen knallen</div>
+      <div class="balloon-score" id="balloon-score">0</div>
+      <div class="balloon-lives" id="balloon-lives"></div>
+    </header>
+    <div class="balloon-field" id="balloon-field">
+      <div class="balloon-tiger" id="balloon-tiger"></div>
+    </div>
+    <div class="balloon-overlay" id="balloon-overlay">
+      <div class="card">
+        <h2 id="balloon-msg-title">Ballonnen knallen!</h2>
+        <p id="balloon-msg">Typ de letter op de ballon om hem te laten knallen. Laat er niet te veel wegvliegen!</p>
+        <button class="btn btn-big btn-go" id="balloon-start">Start! 🎈</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pauze -->
+  <div class="modal hidden" id="pause-modal">
+    <div class="card modal-card">
+      <h2>Pauze ⏸️</h2>
+      <div class="pause-tiger" id="pause-tiger"></div>
+      <button class="btn btn-big btn-go" id="btn-resume">▶️ Verder typen</button>
+      <button class="btn btn-big btn-alt" id="btn-restart">🔁 Opnieuw</button>
+      <button class="btn btn-big btn-ghost" id="btn-quit-level">🗺️ Naar de kaart</button>
+    </div>
+  </div>
+
+  <!-- Instellingen -->
+  <div class="modal hidden" id="settings-modal">
+    <div class="card modal-card settings-card">
+      <h2>Instellingen ⚙️</h2>
+      <label class="toggle"><input type="checkbox" id="set-sound"><span>🔊 Geluid</span></label>
+      <label class="toggle" id="voice-row"><input type="checkbox" id="set-voice"><span>🗣️ Tijger praat</span></label>
+      <button class="btn btn-alt" id="btn-fullscreen">🖥️ Volledig scherm (F11)</button>
+      <button class="btn btn-alt" id="btn-switch">👥 Andere speler</button>
+      <details class="grown-ups">
+        <summary>Voor ouders en leerkrachten</summary>
+        <div id="report"></div>
+        <button class="btn btn-small btn-danger" id="btn-reset">Voortgang van deze speler wissen</button>
+        <button class="btn btn-small btn-danger" id="btn-delete">Deze speler verwijderen</button>
+      </details>
+      <div class="settings-bottom">
+        <button class="btn btn-go" id="btn-close-settings">Klaar</button>
+        <button class="btn btn-ghost" id="btn-exit">Afsluiten</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bevestigen -->
+  <div class="modal hidden" id="confirm-modal">
+    <div class="card modal-card">
+      <h2 id="confirm-text">Weet je het zeker?</h2>
+      <div class="result-buttons">
+        <button class="btn btn-danger" id="confirm-yes">Ja</button>
+        <button class="btn btn-go" id="confirm-no">Nee</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/levels.js"></script>
+  <script src="js/tiger.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/balloons.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

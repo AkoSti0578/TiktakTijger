@@ -1,0 +1,56 @@
+{
+  "name": "tiktak-tijger",
+  "productName": "Tiktak Tijger",
+  "version": "1.0.0",
+  "description": "Tiktak Tijger - leer typen met een stoere tijger! Een typcursus voor kinderen vanaf groep 3.",
+  "main": "main.js",
+  "author": "Tiktak Tijger",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "icon": "node scripts/make-ico.js build/icons",
+    "test": "node scripts/check-levels.js",
+    "dist": "electron-builder --win msi --x64",
+    "dist:dir": "electron-builder --win dir --x64"
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "nl.tiktaktijger.app",
+    "productName": "Tiktak Tijger",
+    "copyright": "Tiktak Tijger",
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "msi",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "TiktakTijger-${version}-Setup.${ext}"
+    },
+    "msi": {
+      "oneClick": false,
+      "perMachine": true,
+      "runAfterFinish": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Tiktak Tijger",
+      "menuCategory": false
+    }
+  }
+}
