@@ -265,7 +265,7 @@
     const level = levelById(id);
     const text = generateText(level, { seed: Date.now() ^ Math.floor(Math.random() * 1e9), name: profile.name });
     S = {
-      level, text, index: 0, correct: 0, errors: 0, streak: 0, bestStreak: 0,
+      level, text, caps: level.type === 'keys' || level.type === 'words', index: 0, correct: 0, errors: 0, streak: 0, bestStreak: 0,
       started: false, startTime: 0, endTime: 0, times: [], errorChars: {}, playing: false,
       paused: false, pausedAt: 0, speed: 0, bgOffset: 0, wrongAtIndex: false, finished: false
     };
@@ -298,7 +298,7 @@
     box.innerHTML = tokens.map((tok) => {
       const chars = [...tok].map((c) => {
         const html = c === ' ' ? '<span class="ch space" data-i="' + idx + '">&nbsp;</span>'
-          : `<span class="ch" data-i="${idx}">${esc(c)}</span>`;
+          : `<span class="ch" data-i="${idx}">${esc(S.caps ? c.toUpperCase() : c)}</span>`;
         idx++;
         return html;
       }).join('');
@@ -363,7 +363,7 @@
     el.classList.add('current');
     const ch = S.text[S.index];
     KB.highlight($('.kb-area'), ch);
-    $('#next-char').textContent = ch === ' ' ? '␣' : ch;
+    $('#next-char').textContent = ch === ' ' ? '␣' : (S.caps ? ch.toUpperCase() : ch);
     $('#next-char').classList.toggle('is-space', ch === ' ');
     const info = KB.infoFor(ch);
     $('#next-letter').className = 'next-letter f-' + (info ? info.finger : 'th');
@@ -460,7 +460,8 @@
     if (e.key === 'Escape') { e.preventDefault(); if (S.playing) pause(); return; }
     if (!S.playing || S.paused) { if (e.key === ' ' || e.key === 'Tab') e.preventDefault(); return; }
 
-    const caps = e.getModifierState && e.getModifierState('CapsLock');
+    // In de letterlessen staan de letters net als op de toetsen (hoofdletters); hoofd/klein maakt dan niet uit.
+    const caps = !S.caps && e.getModifierState && e.getModifierState('CapsLock');
     $('#caps-warning').classList.toggle('hidden', !caps);
 
     if (e.key === 'Tab' || e.key === ' ' || e.key === "'" || e.key === '/') e.preventDefault();
@@ -472,7 +473,7 @@
     const now = performance.now();
     if (!S.started) { S.started = true; S.startTime = now; }
 
-    if (e.key === expected) {
+    if (e.key === expected || (S.caps && e.key.toLowerCase() === expected)) {
       S.charEls[S.index].classList.add(S.wrongAtIndex ? 'fixed' : 'ok');
       S.charEls[S.index].classList.remove('wrong-now');
       S.wrongAtIndex = false;
@@ -574,7 +575,7 @@
     const rankAfter = rankFor(profile.bestCpm || 0);
     Store.saveNow();
 
-    const result = { level: S.level, cpm, acc, secs, stars, isNewBest, rankUp: rankAfter.index > rankBefore.index ? rankAfter : null,
+    const result = { caps: S.caps, level: S.level, cpm, acc, secs, stars, isNewBest, rankUp: rankAfter.index > rankBefore.index ? rankAfter : null,
       unlockedNext: stars > 0 && !prev.stars && S.level.id < LEVELS.length, errorChars: S.errorChars, bestStreak: S.bestStreak };
     setTimeout(() => {
       if (S && S.runnerAnim) S.runnerAnim.stop();
@@ -601,7 +602,7 @@
 
     const extra = $('#rank-up');
     const hard = Object.entries(r.errorChars).sort((a, b) => b[1] - a[1]).slice(0, 3)
-      .map(([c]) => `<span class="chip f-${(KB.infoFor(c) || {}).finger || 'th'}">${c === ' ' ? 'spatie' : esc(c)}</span>`).join(' ');
+      .map(([c]) => `<span class="chip f-${(KB.infoFor(c) || {}).finger || 'th'}">${c === ' ' ? 'spatie' : esc(r.caps ? c.toUpperCase() : c)}</span>`).join(' ');
     let msg = '';
     if (r.rankUp) {
       msg = `<div class="rank-up-title">🎉 Je tijger is nu een <b>${esc(r.rankUp.name)}</b>!</div>

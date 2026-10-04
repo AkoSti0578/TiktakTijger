@@ -49,7 +49,7 @@
     el.className = 'balloon';
     const color = COLORS[Math.floor(Math.random() * COLORS.length)];
     el.style.setProperty('--bc', color);
-    el.innerHTML = `<div class="balloon-body"><span>${letter}</span></div><div class="balloon-string"></div>`;
+    el.innerHTML = `<div class="balloon-body"><span>${letter.toUpperCase()}</span></div><div class="balloon-string"></div>`;
     const w = field.clientWidth;
     const x = 60 + Math.random() * (w - 180);
     el.style.left = x + 'px';

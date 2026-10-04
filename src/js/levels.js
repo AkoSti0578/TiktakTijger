@@ -27,7 +27,7 @@
     { id: 5, world: 1, type: 'keys', newKeys: ['g', 'h'], title: 'G en H', length: 44, target: 22,
       intro: 'Je wijsvingers zijn sterk. Ze stappen even opzij naar de G en de H.' },
     { id: 6, world: 1, type: 'words', newKeys: [], title: 'Jungle woordjes', length: 50, target: 24,
-      intro: 'Met de thuisrij kun je al echte woorden typen! Kijk maar: jas, kaas en sla.' },
+      intro: 'Met de thuisrij kun je al echte woorden typen! Kijk maar: JAS, KAAS en SLA.' },
 
     { id: 7, world: 2, type: 'keys', newKeys: ['e', 'i'], title: 'E en I', length: 48, target: 24,
       intro: 'We klimmen de berg op! Je middelvinger stapt omhoog naar de E en de I.' },
@@ -47,7 +47,7 @@
     { id: 14, world: 3, type: 'keys', newKeys: ['c', 'z'], title: 'C en Z', length: 58, target: 32,
       intro: 'De Z is voor je linker pink, de C voor je linker middelvinger.' },
     { id: 15, world: 3, type: 'keys', newKeys: ['x', 'y', 'q'], title: 'X, Y en Q', length: 58, target: 32,
-      intro: 'Dit zijn zeldzame letters! De X, de Y en de Q. Taxi, pony en quiz!' },
+      intro: 'Dit zijn zeldzame letters! De X, de Y en de Q. TAXI, PONY en QUIZ!' },
     { id: 16, world: 3, type: 'words', newKeys: [], title: 'Alle letters', length: 70, target: 34,
       intro: 'Je kent nu ALLE letters! Laten we laten zien wat je kunt.' },
 

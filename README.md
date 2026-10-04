@@ -15,6 +15,9 @@ en hoe stoerder hij wordt (bandana, zonnebril, cape en zelfs een kroon!).
   4. 🎈 *Hoofdletter Heuvels* – Shift, punt, komma, ? en !, cijfers
   5. 🌋 *Verhalen Vulkaan* – zinnen, snelle zinnen en het eindbaas-verhaal
 - **Tiktak begeleidt het kind**: legt elke les uit in een tekstballon en geeft tips en complimentjes.
+- **Letters precies zoals op de toetsen**: in de letterlessen en het ballonnenspel staan alle letters als hoofdletters,
+  net als op een QWERTY-toetsenbord (dus een L in plaats van een l die op een streepje lijkt). Het kind typt gewoon
+  zonder Shift.
 - **Toetsenbord en handjes op het scherm** met een kleur per vinger, zodat het kind ziet welke vinger welke toets typt.
 - **1 tot 3 sterren per level** (netjes typen + snelheid). Een level gehaald? Dan gaat het volgende open.
 - **Tijger-snelheidsmeter**: de tijger rent sneller naarmate het kind sneller typt.
