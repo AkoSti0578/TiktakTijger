@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "description": "Tiktak Tijger - leer typen met een stoere tijger! Een typcursus voor kinderen vanaf groep 3.",
   "main": "main.js",
-  "author": "Tiktak Tijger",
-  "license": "MIT",
+  "author": "Arnold Kolkman",
+  "license": "UNLICENSED",
+  "private": true,
   "scripts": {
     "start": "electron .",
     "icon": "node scripts/make-ico.js build/icons",
@@ -20,7 +21,7 @@
   "build": {
     "appId": "nl.tiktaktijger.app",
     "productName": "Tiktak Tijger",
-    "copyright": "Tiktak Tijger",
+    "copyright": "© 2026 Arnold Kolkman. Alle rechten voorbehouden.",
     "files": [
       "main.js",
       "preload.js",

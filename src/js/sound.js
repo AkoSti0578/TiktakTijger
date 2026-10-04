@@ -107,41 +107,5 @@
     }
   };
 
-  // Spraak: de tijger praat (Nederlandse stem van Windows, als die er is)
-  let voice = null;
-  let voiceEnabled = true;
-  function findVoice() {
-    if (!('speechSynthesis' in window)) return null;
-    const voices = speechSynthesis.getVoices();
-    voice = voices.find((v) => /^nl(-|_)NL/i.test(v.lang)) || voices.find((v) => /^nl/i.test(v.lang)) || null;
-    return voice;
-  }
-  if ('speechSynthesis' in window) {
-    findVoice();
-    speechSynthesis.onvoiceschanged = findVoice;
-  }
-
-  const Voice = {
-    available() { return !!(voice || findVoice()); },
-    setEnabled(v) { voiceEnabled = !!v; if (!v) this.stop(); },
-    isEnabled() { return voiceEnabled; },
-    say(text) {
-      if (!voiceEnabled || !this.available()) return;
-      try {
-        speechSynthesis.cancel();
-        // Emoji niet voorlezen
-        const clean = text.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '');
-        const u = new SpeechSynthesisUtterance(clean);
-        u.voice = voice;
-        u.lang = voice.lang;
-        u.rate = 0.95;
-        u.pitch = 1.15;
-        speechSynthesis.speak(u);
-      } catch (e) { /* negeren */ }
-    },
-    stop() { try { speechSynthesis.cancel(); } catch (e) { /* */ } }
-  };
-
   root.TTSound = S;
-  root.TTVoice = Voice;
 })(window);

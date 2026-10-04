@@ -14,8 +14,7 @@ en hoe stoerder hij wordt (bandana, zonnebril, cape en zelfs een kroon!).
   3. 🌊 *Onderrij Oceaan* – N M, V B, C Z, X Y Q en alle letters
   4. 🎈 *Hoofdletter Heuvels* – Shift, punt, komma, ? en !, cijfers
   5. 🌋 *Verhalen Vulkaan* – zinnen, snelle zinnen en het eindbaas-verhaal
-- **Tiktak begeleidt het kind**: legt elke les uit (en leest voor als Windows een Nederlandse stem heeft),
-  geeft tips en complimentjes.
+- **Tiktak begeleidt het kind**: legt elke les uit in een tekstballon en geeft tips en complimentjes.
 - **Toetsenbord en handjes op het scherm** met een kleur per vinger, zodat het kind ziet welke vinger welke toets typt.
 - **1 tot 3 sterren per level** (netjes typen + snelheid). Een level gehaald? Dan gaat het volgende open.
 - **Tijger-snelheidsmeter**: de tijger rent sneller naarmate het kind sneller typt.
@@ -53,3 +52,7 @@ npm run dist     # MSI bouwen (op Windows)
 ```
 
 Gemaakt met Electron. Lettertypen: Fredoka en Andika (SIL Open Font License, zie `src/fonts`).
+
+---
+
+Ontwikkeld door **Arnold Kolkman**. © 2026 Arnold Kolkman. Alle rechten voorbehouden.

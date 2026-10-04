@@ -47,7 +47,7 @@
       bestCpm: 0,
       balloonHigh: 0,
       totalChars: 0,
-      settings: { sound: true, voice: true }
+      settings: { sound: true }
     };
     data.profiles.push(p);
     data.lastProfileId = p.id;

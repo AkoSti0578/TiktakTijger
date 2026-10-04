@@ -101,7 +101,6 @@
     $('#balloon-msg').innerHTML = `Je hebt <b>${G.score}</b> ballonnen geknald!<br><small>Jouw record: <b>${opts.high}</b></small>`;
     $('#balloon-start').textContent = 'Nog een keer! 🎈';
     setTimeout(() => $('#balloon-overlay').classList.remove('hidden'), 700);
-    if (root.TTVoice) root.TTVoice.say(isRecord ? `Nieuw record! ${G.score} ballonnen!` : `Je hebt ${G.score} ballonnen geknald!`);
   }
 
   function key(e) {

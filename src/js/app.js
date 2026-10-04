@@ -4,7 +4,6 @@
 
   const { WORLDS, LEVELS, levelById, generateText, starsFor, rankFor } = window.TTLevels;
   const Sound = window.TTSound;
-  const Voice = window.TTVoice;
   const Store = window.TTStore;
   const KB = window.TTKeyboard;
 
@@ -73,7 +72,6 @@
     const input = $('#name-input');
     input.value = '';
     setTimeout(() => input.focus(), 50);
-    Voice.say('Hoi! Ik ben Tiktak Tijger. Hoe heet jij?');
   }
 
   function renderPlayers() {
@@ -96,10 +94,9 @@
   function selectProfile(id, greet) {
     profile = Store.getProfile(id);
     if (!profile) return showWelcome();
-    profile.settings = profile.settings || { sound: true, voice: true };
+    profile.settings = profile.settings || { sound: true };
     Store.setCurrent(id);
     Sound.setEnabled(profile.settings.sound !== false);
-    Voice.setEnabled(profile.settings.voice !== false);
     showMap();
     if (greet) {
       const msg = rand([`Hoi ${profile.name}! Klaar voor een typavontuur?`, `Welkom terug, ${profile.name}! Grrroar!`,
@@ -256,7 +253,6 @@
     if (!b) return;
     b.textContent = text;
     b.classList.remove('hidden', 'pop'); void b.offsetWidth; b.classList.add('pop');
-    Voice.say(text);
     clearTimeout(mapBubbleTimer);
     mapBubbleTimer = setTimeout(() => b.classList.add('hidden'), 7000);
   }
@@ -334,7 +330,6 @@
       </div>
     </div>`;
     cd.classList.remove('hidden');
-    Voice.say(level.intro);
     S.introOpen = true;
     $('#btn-ready').addEventListener('click', () => { Sound.unlock(); beginCountdown(); });
   }
@@ -342,7 +337,6 @@
   function beginCountdown() {
     if (!S || !S.introOpen) return;
     S.introOpen = false;
-    Voice.stop();
     const cd = $('#countdown');
     const steps = ['3', '2', '1', 'Typen!'];
     let i = 0;
@@ -543,7 +537,6 @@
     }
     cancelAnimationFrame(parallaxRAF);
     S = null;
-    Voice.stop();
     modal('pause-modal', false);
     showMap();
   }
@@ -648,11 +641,6 @@
         Sound.sad();
       }
       if (r.rankUp) { setTimeout(() => { Sound.roar(); window.TTConfetti.burst(200); }, 800); }
-      const say = r.rankUp ? `Wauw ${profile.name}! Je tijger is nu een ${r.rankUp.name}!`
-        : r.stars === 0 ? `Bijna, ${profile.name}! Probeer het nog een keer. Rustig typen!`
-          : r.stars === 3 ? `Fantastisch, ${profile.name}! Drie sterren!`
-            : rand([`Goed gedaan, ${profile.name}!`, `Knap hoor, ${profile.name}!`]);
-      Voice.say(say);
     }, 500 + 3 * 450);
   }
 
@@ -678,8 +666,6 @@
   /* ---------- Instellingen ---------- */
   function openSettings() {
     $('#set-sound').checked = profile.settings.sound !== false;
-    $('#set-voice').checked = profile.settings.voice !== false;
-    $('#voice-row').classList.toggle('hidden', !Voice.available());
     renderReport();
     modal('settings-modal', true);
   }
@@ -702,15 +688,11 @@
   $('#set-sound').addEventListener('change', (e) => {
     profile.settings.sound = e.target.checked; Sound.setEnabled(e.target.checked); Sound.click(); Store.save();
   });
-  $('#set-voice').addEventListener('change', (e) => {
-    profile.settings.voice = e.target.checked; Voice.setEnabled(e.target.checked); Store.save();
-    if (e.target.checked) Voice.say('Hoi! Ik praat weer!');
-  });
   $('#btn-fullscreen').addEventListener('click', () => {
     if (window.tiktak && window.tiktak.toggleFullscreen) window.tiktak.toggleFullscreen();
     else if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => {});
   });
-  $('#btn-switch').addEventListener('click', () => { Sound.click(); modal('settings-modal', false); Voice.stop(); showWelcome(); });
+  $('#btn-switch').addEventListener('click', () => { Sound.click(); modal('settings-modal', false); showWelcome(); });
   $('#btn-exit').addEventListener('click', () => {
     Store.saveNow();
     if (window.tiktak && window.tiktak.quit) window.tiktak.quit(); else window.close();
