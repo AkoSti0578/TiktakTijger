@@ -32,7 +32,7 @@ Via **🔒 Ouders** (startscherm) of **Instellingen → Voor ouders en leerkrach
 - De eerste keer maak je eenmalig een **pincode** (4–6 cijfers). Zonder pincode kan de timer niet worden ingesteld,
   verlengd of gestopt. Na 5 foute pogingen is de invoer 1 minuut geblokkeerd.
 - Kies een speeltijd (15, 30, 45, 60 minuten of zelf invullen) en start de timer. Het kind ziet bovenin hoeveel tijd er
-  nog over is. Bij 5 minuten komt een melding, de laatste minuut verschijnt een grote aftelling.
+  nog over is. Bij 5 minuten komt een melding, de laatste 15 seconden verschijnt een grote aftelling.
 - **Is de tijd om, dan wordt de laptop geforceerd afgesloten** (`shutdown /s /f`). Niet-opgeslagen werk in andere
   programma's gaat dan verloren.
 - Sluit het kind Tiktak Tijger terwijl de timer loopt, dan verdwijnt de app naar het systeemvak en loopt de timer door.

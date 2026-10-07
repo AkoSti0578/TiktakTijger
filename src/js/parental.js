@@ -33,7 +33,7 @@
       const left = st.endsAt - Date.now();
       if (left <= 0) return expire();
       timer = setTimeout(expire, left);
-      if (left > 60000) warnTimer = setTimeout(() => emit('parent:warn'), left - 60000);
+      if (left > 15000) warnTimer = setTimeout(() => emit('parent:warn'), left - 15000);
     };
     if (st.endsAt && !st.locked && Date.now() >= st.endsAt) { st.endsAt = null; st.locked = true; persist(); }
     setTimeout(arm, 0);
@@ -78,6 +78,7 @@
   let pin = null; // alleen in het geheugen zolang het ouderscherm open is
   let warned5 = false;
   let tickTimer = null;
+  const FINAL_MS = 15 * 1000; // aftelscherm in de laatste 15 seconden
 
   function remaining() { return st.endsAt ? st.endsAt - (Date.now() + offset) : null; }
   function fmt(ms) {
@@ -104,11 +105,11 @@
       badge.classList.remove('hidden');
       $('#timer-badge-time').textContent = fmt(left);
       badge.classList.toggle('low', left <= 5 * 60000);
-      if (left <= 5 * 60000 && !warned5 && left > 60000) {
+      if (left <= 5 * 60000 && !warned5 && left > FINAL_MS) {
         warned5 = true;
         toast('⏰ Nog 5 minuten speeltijd!');
       }
-      if (left <= 60000) showFinalMinute(left);
+      if (left <= FINAL_MS) showFinalMinute(left);
       else hideOverlay('final');
     } else {
       badge.classList.add('hidden');

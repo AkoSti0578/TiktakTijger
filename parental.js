@@ -8,7 +8,7 @@ const crypto = require('crypto');
 const { execFile } = require('child_process');
 
 const FILE = () => path.join(app.getPath('userData'), 'ouder-timer.json');
-const WARN_MS = 60 * 1000; // laatste minuut: venster naar voren met aftelling
+const WARN_MS = 15 * 1000; // laatste 15 seconden: venster naar voren met aftelling
 const MAX_MINUTES = 8 * 60;
 
 let state = { pin: null, endsAt: null, minutes: 0, locked: false };
