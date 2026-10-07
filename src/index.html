@@ -36,6 +36,7 @@
         <button class="btn btn-small btn-ghost" id="add-player">+ Nieuwe speler</button>
       </div>
     </div>
+    <button class="btn btn-small btn-ghost parent-corner" data-open-parent title="Voor ouders: speeltimer">🔒 Ouders</button>
     <footer class="credits">Ontwikkeld door Arnold Kolkman &middot; &copy; 2026 Alle rechten voorbehouden</footer>
   </section>
 
@@ -156,6 +157,7 @@
       <button class="btn btn-alt" id="btn-switch">👥 Andere speler</button>
       <details class="grown-ups">
         <summary>Voor ouders en leerkrachten</summary>
+        <button class="btn btn-small btn-alt" data-open-parent>⏱️ Speeltimer instellen (pincode)</button>
         <div id="report"></div>
         <button class="btn btn-small btn-danger" id="btn-reset">Voortgang van deze speler wissen</button>
         <button class="btn btn-small btn-danger" id="btn-delete">Deze speler verwijderen</button>
@@ -165,6 +167,74 @@
         <button class="btn btn-ghost" id="btn-exit">Afsluiten</button>
       </div>
       <div class="credits-small">Tiktak Tijger &middot; Ontwikkeld door Arnold Kolkman<br>&copy; 2026 Alle rechten voorbehouden</div>
+    </div>
+  </div>
+
+  <!-- Speeltimer: zichtbaar voor het kind -->
+  <div class="timer-badge hidden" id="timer-badge" title="Speeltijd">⏱️ <span id="timer-badge-time">0:00</span></div>
+  <div class="parent-toast hidden" id="parent-toast"></div>
+
+  <!-- Laatste minuut / speeltijd op -->
+  <div class="timeup-overlay hidden" id="timeup-overlay">
+    <div class="card timeup-card">
+      <div class="timeup-tiger">🐯💤</div>
+      <h2 id="timeup-title">De speeltijd is op!</h2>
+      <div class="timeup-count" id="timeup-count">60</div>
+      <p id="timeup-text"></p>
+      <button class="btn btn-small btn-ghost" id="timeup-parent">🔒 Ouder</button>
+    </div>
+  </div>
+
+  <!-- Ouderscherm: pincode en timer -->
+  <div class="modal hidden" id="parent-modal">
+    <div class="card modal-card parent-card">
+      <h2>🔒 Voor ouders</h2>
+
+      <form id="pin-create-form" autocomplete="off">
+        <div id="parent-step-create" class="hidden">
+          <p>Maak eenmalig een pincode van 4 tot 6 cijfers. Daarmee stel je de speeltimer in. Vertel hem niet aan je kind!</p>
+          <input id="pin-new" class="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="Nieuwe pincode" aria-label="Nieuwe pincode">
+          <input id="pin-new2" class="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="Pincode nog een keer" aria-label="Pincode herhalen">
+          <button type="submit" class="btn btn-go">Pincode opslaan</button>
+        </div>
+      </form>
+
+      <form id="pin-enter-form" autocomplete="off">
+        <div id="parent-step-enter" class="hidden">
+          <p>Voer de ouder-pincode in.</p>
+          <input id="pin-enter" class="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="Pincode" aria-label="Pincode">
+          <button type="submit" class="btn btn-go">Openen</button>
+        </div>
+      </form>
+
+      <div id="parent-step-timer" class="hidden">
+        <p class="parent-status" id="parent-status"></p>
+        <div class="timer-pick">
+          <span>Speeltijd:</span>
+          <button class="btn btn-small timer-preset" data-min="15">15 min</button>
+          <button class="btn btn-small timer-preset on" data-min="30">30 min</button>
+          <button class="btn btn-small timer-preset" data-min="45">45 min</button>
+          <button class="btn btn-small timer-preset" data-min="60">1 uur</button>
+          <label class="timer-custom"><input id="timer-minutes" type="number" min="1" max="480" value="30"> min</label>
+        </div>
+        <button class="btn btn-go" id="btn-start-timer">▶️ Timer starten</button>
+        <button class="btn btn-alt hidden" id="btn-add-time">➕ 15 minuten erbij</button>
+        <button class="btn btn-ghost hidden" id="btn-stop-timer">⏹️ Timer stoppen</button>
+        <p class="parent-warning">⚠️ Als de tijd om is, wordt de laptop <b>geforceerd afgesloten</b>. Werk dat niet is opgeslagen
+          in andere programma's gaat dan verloren. Een minuut van tevoren verschijnt een aftelling. Sluit je Tiktak Tijger
+          terwijl de timer loopt, dan loopt de timer op de achtergrond door.</p>
+        <details class="grown-ups">
+          <summary>Pincode wijzigen</summary>
+          <form id="pin-change-form" autocomplete="off" class="pin-change">
+            <input id="pin-old" class="pin-input small" type="password" inputmode="numeric" maxlength="6" placeholder="Huidige pincode">
+            <input id="pin-change" class="pin-input small" type="password" inputmode="numeric" maxlength="6" placeholder="Nieuwe pincode">
+            <button type="submit" class="btn btn-small btn-alt">Wijzigen</button>
+          </form>
+        </details>
+      </div>
+
+      <div class="parent-error" id="parent-error"></div>
+      <button class="btn btn-ghost" id="btn-parent-close">Sluiten</button>
     </div>
   </div>
 
@@ -186,6 +256,7 @@
   <script src="js/keyboard.js"></script>
   <script src="js/confetti.js"></script>
   <script src="js/balloons.js"></script>
+  <script src="js/parental.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

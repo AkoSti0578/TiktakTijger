@@ -2,6 +2,10 @@
 const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const parental = require('./parental');
+
+let mainWindow = null;
+let reallyQuit = false;
 
 const DATA_FILE = () => path.join(app.getPath('userData'), 'tiktak-tijger-data.json');
 
@@ -48,6 +52,19 @@ function createWindow() {
     }
   });
 
+  mainWindow = win;
+
+  // Loopt er een ouder-timer? Dan gaat het venster alleen naar de achtergrond.
+  win.on('close', (e) => {
+    if (!reallyQuit && parental.shouldKeepRunning()) {
+      e.preventDefault();
+      win.hide();
+    }
+  });
+
+  // Windows wordt afgesloten of de gebruiker meldt zich af: dan altijd netjes stoppen
+  win.on('session-end', () => { reallyQuit = true; });
+
   win.once('ready-to-show', () => {
     win.maximize();
     win.show();
@@ -82,7 +99,15 @@ Menu.setApplicationMenu(null);
 
 ipcMain.handle('store:load', () => loadData());
 ipcMain.handle('store:save', (_e, data) => saveData(data));
-ipcMain.handle('app:quit', () => app.quit());
+ipcMain.handle('app:quit', () => {
+  if (parental.shouldKeepRunning()) {
+    if (mainWindow) mainWindow.hide();
+    return 'hidden';
+  }
+  reallyQuit = true;
+  app.quit();
+  return 'quit';
+});
 ipcMain.handle('app:fullscreen', (e) => {
   const win = BrowserWindow.fromWebContents(e.sender);
   if (win) win.setFullScreen(!win.isFullScreen());
@@ -93,15 +118,13 @@ if (!gotLock) {
   app.quit();
 } else {
   app.on('second-instance', () => {
-    const [win] = BrowserWindow.getAllWindows();
-    if (win) {
-      if (win.isMinimized()) win.restore();
-      win.focus();
-    }
+    parental.showWindow();
   });
   app.whenReady().then(() => {
     if (process.platform === 'win32') app.setAppUserModelId('nl.tiktaktijger.app');
+    parental.init(() => mainWindow);
     createWindow();
   });
-  app.on('window-all-closed', () => app.quit());
+  app.on('before-quit', () => { reallyQuit = !parental.shouldKeepRunning(); });
+  app.on('window-all-closed', () => { if (!parental.shouldKeepRunning()) app.quit(); });
 }

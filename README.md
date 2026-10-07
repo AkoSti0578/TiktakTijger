@@ -25,6 +25,21 @@ en hoe stoerder hij wordt (bandana, zonnebril, cape en zelfs een kroon!).
 - **Overzicht voor ouders/leerkrachten** in Instellingen (sterren, snelheid en nauwkeurigheid per les).
 - Werkt volledig offline; geen account, geen internet, geen reclame.
 
+## Speeltimer voor ouders ⏱️
+
+Via **🔒 Ouders** (startscherm) of **Instellingen → Voor ouders en leerkrachten** stel je een speeltimer in.
+
+- De eerste keer maak je eenmalig een **pincode** (4–6 cijfers). Zonder pincode kan de timer niet worden ingesteld,
+  verlengd of gestopt. Na 5 foute pogingen is de invoer 1 minuut geblokkeerd.
+- Kies een speeltijd (15, 30, 45, 60 minuten of zelf invullen) en start de timer. Het kind ziet bovenin hoeveel tijd er
+  nog over is. Bij 5 minuten komt een melding, de laatste minuut verschijnt een grote aftelling.
+- **Is de tijd om, dan wordt de laptop geforceerd afgesloten** (`shutdown /s /f`). Niet-opgeslagen werk in andere
+  programma's gaat dan verloren.
+- Sluit het kind Tiktak Tijger terwijl de timer loopt, dan verdwijnt de app naar het systeemvak en loopt de timer door.
+- Daarna blijft de app op slot tot een ouder met de pincode een nieuwe timer start of de app ontgrendelt.
+- Pincode vergeten? Verwijder het bestand `%APPDATA%\Tiktak Tijger\ouder-timer.json` (de voortgang van de kinderen
+  blijft bewaard) en maak een nieuwe pincode.
+
 Voortgang wordt bewaard in `%APPDATA%\Tiktak Tijger\tiktak-tijger-data.json`.
 
 Sneltoetsen: **F11** = volledig scherm, **Esc** = pauze.

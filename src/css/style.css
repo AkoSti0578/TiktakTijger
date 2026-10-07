@@ -545,6 +545,53 @@ button { font-family: inherit; }
 .balloon-overlay .card { text-align: center; max-width: 520px; font-size: 22px; animation: popIn 0.4s cubic-bezier(.2, 1.6, .4, 1); }
 .balloon-overlay h2 { margin: 0 0 8px; font-size: 40px; }
 
+/* ---------- Ouder-timer ---------- */
+.parent-corner { position: absolute; top: 14px; left: 16px; z-index: 5; }
+.timer-badge {
+  position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 40; pointer-events: none;
+  background: #fff; border: 4px solid var(--ink); border-radius: 30px; padding: 4px 18px; font-size: 24px; font-weight: 700;
+  box-shadow: var(--shadow); font-variant-numeric: tabular-nums;
+}
+body[data-screen="screen-play"] .timer-badge, body[data-screen="screen-balloons"] .timer-badge { top: auto; bottom: 10px; font-size: 18px; padding: 2px 12px; }
+.timer-badge.low { background: #ffd6de; animation: pulseBadge 1s ease-in-out infinite; }
+@keyframes pulseBadge { 50% { transform: translateX(-50%) scale(1.08); } }
+.parent-toast {
+  position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 90; background: var(--yellow);
+  border: 4px solid var(--ink); border-radius: 20px; padding: 10px 24px; font-size: 24px; font-weight: 700; box-shadow: var(--shadow);
+}
+.parent-toast.show { animation: popIn 0.4s cubic-bezier(.2, 1.6, .4, 1); }
+.timeup-overlay {
+  position: fixed; inset: 0; z-index: 70; display: flex; align-items: center; justify-content: center;
+  background: rgba(20, 33, 61, 0.75); backdrop-filter: blur(4px);
+}
+.timeup-card { text-align: center; max-width: 620px; animation: popIn 0.5s cubic-bezier(.2, 1.6, .4, 1); }
+.timeup-card h2 { margin: 0; font-size: 44px; color: var(--orange); -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; }
+.timeup-card p { font-size: 24px; }
+.timeup-tiger { font-size: 90px; animation: bounce 1.6s ease-in-out infinite; }
+.timeup-count {
+  font-size: 140px; font-weight: 700; line-height: 1; color: var(--yellow); -webkit-text-stroke: 6px var(--ink); paint-order: stroke fill;
+  font-variant-numeric: tabular-nums;
+}
+#parent-modal { z-index: 80; }
+.parent-card { width: min(640px, 94vw); text-align: left; font-size: 18px; }
+.parent-card h2 { text-align: center; }
+.parent-card p { margin: 6px 0; }
+.parent-card #parent-step-create, .parent-card #parent-step-enter, .parent-card #parent-step-timer { display: flex; flex-direction: column; gap: 10px; }
+.parent-card .hidden { display: none !important; }
+.pin-input {
+  font-family: 'Andika', sans-serif; font-size: 30px; letter-spacing: 8px; text-align: center; padding: 8px 14px;
+  border: 4px solid var(--ink); border-radius: 16px; outline: none; background: #fff; color: var(--ink);
+}
+.pin-input:focus { border-color: var(--orange); box-shadow: 0 0 0 5px rgba(255, 140, 26, 0.3); }
+.pin-input.small { font-size: 20px; letter-spacing: 4px; padding: 4px 10px; width: 180px; }
+.pin-change { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+.parent-status { background: #fff; border: 3px solid var(--ink); border-radius: 14px; padding: 10px 14px; }
+.timer-pick { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-weight: 600; }
+.timer-preset.on { background: linear-gradient(180deg, #5cf2a8, #06d6a0); }
+.timer-custom input { width: 80px; font-size: 20px; font-family: inherit; padding: 4px 8px; border: 3px solid var(--ink); border-radius: 12px; }
+.parent-warning { font-size: 15px; background: #fff3d6; border: 3px dashed #e8a33d; border-radius: 12px; padding: 8px 12px; }
+.parent-error { color: #c1121f; font-weight: 700; min-height: 1.2em; text-align: center; }
+
 /* ---------- Confetti ---------- */
 .confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
 

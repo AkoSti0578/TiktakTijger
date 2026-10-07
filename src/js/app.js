@@ -740,6 +740,11 @@
   /* ---------- Toetsen ---------- */
   document.addEventListener('keydown', (e) => {
     const screen = document.body.dataset.screen;
+    // Ouderscherm of slotscherm open: daar geen spel-toetsen
+    if (window.TTParent && window.TTParent.blocksInput()) {
+      if (S && S.playing && !S.paused) pause();
+      return;
+    }
     if (!$('#confirm-modal').classList.contains('hidden')) return;
     if (!$('#settings-modal').classList.contains('hidden')) {
       if (e.key === 'Escape') modal('settings-modal', false);
@@ -765,6 +770,7 @@
 
   /* ---------- Opstarten ---------- */
   async function boot() {
+    window.TTParent.init();
     renderLogo();
     await Store.load();
     const last = Store.data.lastProfileId && Store.getProfile(Store.data.lastProfileId);
